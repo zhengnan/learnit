@@ -1,0 +1,126 @@
+# Common
+DEST=/home/focus/workspace/openstack
+#SERVICE_ENDPOINT=http://pubnode:35357/v2.0
+#OFFLINE=true
+HOST_IP=10.205.44.31
+SERVICE_HOST=$HOST_IP
+CONTROL_HOST=$HOST_IP
+QPID_HOST=$HOST_IP
+#FIXED_RANGE=192.168/24
+#113 -- 118, http://jodies.de/ipcalc
+#Q_FLOATING_ALLOCATION_POOL=start=172.24.4.233,end=172.24.4.238
+#NETWORK_GATEWAY=10.2.0.1
+#PUBLIC_NETWORK_GATEWAY=172.24.4.232
+
+# Misc
+DATABASE_USER=root
+DATABASE_PASSWORD=passwd
+ADMIN_PASSWORD=passwd
+SERVICE_PASSWORD=passwd
+SERVICE_TOKEN=ADMIN
+QPID_PASSWORD=passwd
+
+# For Keystone, UUID or PKI
+#KEYSTONE_TOKEN_FORMAT=UUID
+
+# For Swift
+#SWIFT_REPLICAS=1
+#SWIFT_HASH=ADMIN
+
+# Enable Logging
+LOGFILE=$DEST/logs/stack.log
+ENABLE_DEBUG_LOG_LEVEL=False
+SYSLOG=False
+SCREEN_LOGDIR=$DEST/logs
+
+# Pre-requisite
+ENABLED_SERVICES=qpid,mysql,horizon,key,g-api,g-reg
+
+# Nova - Compute Service
+ENABLED_SERVICES+=,n-api,n-crt,n-obj,n-cpu,n-cond,n-sch
+#IMAGE_URLS+=",https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img"
+#ENABLED_SERVICES+=,n-cell
+
+# Swift - Object Storage
+#ENABLED_SERVICES+=,s-proxy,s-object,s-container,s-account
+
+# Neutron - Neutron L2/L3 Connection Service
+ENABLED_SERVICES+=,q-svc,q-agt,q-dhcp,q-l3,q-meta,neutron
+
+## Neutron - Neutron L4/L7 Network Service
+ENABLED_SERVICES+=,q-lbaas,q-fwaas
+ENABLED_SERVICES+=,q-vpn
+
+# Neutron Agent
+#Q_AGENT=linuxbridge
+Q_USE_NAMESPACE=True
+Q_ALLOW_OVERLAPPING_IP=True
+
+# VLAN configuration
+ENABLE_TENANT_VLANS=False
+OVS_PHYSICAL_BRIDGE=br-os
+
+# GRE and VXLAN tunnel configuration
+Q_PLUGIN=ml2
+ENABLE_TENANT_TUNNELS=True
+Q_ML2_TENANT_NETWORK_TYPE=vxlan
+Q_DVR_MODE=dvr_snat
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,linuxbridge,l2population
+Q_USE_DEBUG_COMMAND=True
+Q_DVR_ENABLED=True
+
+# VPNaaS
+IPSEC_PACKAGE=openswan
+
+# Cinder - Block Device Service
+#ENABLED_SERVICES+=,cinder,c-api,c-vol,c-sch
+
+# Heat - Orchestration Service
+#ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
+#IMAGE_URLS+=",http://fedorapeople.org/groups/heat/prebuilt-jeos-images/F17-x86_64-cfntools.qcow2"
+
+# Ceilometer - Metering Service (metering + alarming)
+#enable_service ceilometer-acompute ceilometer-acentral ceilometer-collector ceilometer-api
+#enable_service ceilometer-alarm-notifier ceilometer-alarm-evaluator
+
+# Apache fronted for WSGI
+APACHE_ENABLED_SERVICES+=keystone
+#APACHE_ENABLED_SERVICES+=,swift
+
+# Multi-host
+MULTI_HOST=False
+MYSQL_HOST=$CONTROL_HOST
+RABBIT_HOST=$CONTROL_HOST
+GLANCE_HOSTPORT=$CONTROL_HOST:9292
+
+#HORIZON_REPO=https://github.com/openstack/horizon
+#HORIZON_BRANCH=stable/grizzly
+
+#CINDER_REPO=https://github.com/openstack/cinder.git
+#CINDER_BRANCH=stable/grizzly
+#CINDERCLIENT_REPO=https://github.com/openstack/python-cinderclient.git
+#CINDERCLIENT_BRANCH=stable/grizzly
+
+#NOVA_REPO=https://github.com/openstack/nova.git
+#NOVA_BRANCH=stable/grizzly
+#NOVACLIENT_REPO=https://github.com/openstack/python-novaclient.git
+#NOVACLIENT_BRANCH=stable/grizzly
+
+#GLANCE_REPO=https://github.com/openstack/glance.git
+#GLANCE_BRANCH=stable/grizzly
+#GLANCECLIENT_REPO=https://github.com/openstack/python-glanceclient.git
+
+#KEYSTONE_REPO=https://github.com/openstack/keystone.git
+#KEYSTONE_BRANCH=stable/grizzly
+#KEYSTONECLIENT_REPO=https://github.com/openstack/python-keystoneclient.git
+#KEYSTONECLIENT_BRANCH=stable/grizzly
+
+#NEUTRON_REPO=https://github.com/openstack/neutron.git
+#NEUTRON_BRANCH=stable/grizzly
+#NEUTRONCLIENT_REPO=https://github.com/openstack/python-neutronclient.git
+#NEUTRONCLIENT_BRANCH=stable/grizzly
+
+#HEAT_BRANCH=master
+
+NEUTRON_REPO="https://github.com/ecbaldwin/neutron-dvr.git"
+NEUTRON_BRANCH="master"
